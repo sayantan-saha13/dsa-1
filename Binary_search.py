@@ -1,8 +1,7 @@
-def linear_search(nList,nNum):
-    for index,element in enumerate(nList):
-        if nNum==element:
-            return index
-    return False
-nList=[12,4,5,232,1,51,67645,3,111,35]
-nNum=51
-print(linear_search(nList,nNum))
+def binary_search(nList,nSearch):
+    a_index=0
+    b_index=len(nList)-1
+    mid_index=0
+    while a_index<b_index:
+       mid_index=(a_index+b_index)//2
+       
