@@ -33,7 +33,7 @@ class Bst:
               self.right.search(data)
             else:
                 print("node not found")
-    def delete(self,data):
+    def delete(self,data,curr):
         if self.val is None:
             print("no node is found")
             return
@@ -50,10 +50,21 @@ class Bst:
         else:
             if self.left is None:
                 temp=self.right
+                if data==curr:
+                    self.val=temp.val
+                    self.left=temp.left
+                    self.right=temp.right
+                    temp=None
+                    return
                 self=None
                 return temp
             if self.right is None:
                 temp=self.left
+                if data==curr:
+                    self.val=temp.val
+                    self.left=temp.left
+                    self.right=temp.right
+                    temp=None
                 self = None
                 return temp
             node=self.right
@@ -73,10 +84,16 @@ def preorder(Node):
         preorder(Node.left)
         preorder(Node.right)
 
+def count(node):
+    if node:
+        return 1 + count(node.left) + count(node.right)
+    return 0
+
 root=Bst(10)
-l=[6,3,1,6,98,3,7]
+l=[11,12,13]
 for i in l:
     root.insert(i)
+
 print("\n")
 inorder(root)
 print("\n")
@@ -84,8 +101,10 @@ root.search(3)
 print("\n")
 preorder(root)
 print("\n")
-root.delete(10)
+root.delete(10,root.val)
 print("after deleting\n")
 preorder(root)
 print("\n")
 inorder(root)
+print("\n")
+print(count(root))
