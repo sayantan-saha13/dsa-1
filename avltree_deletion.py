@@ -53,6 +53,37 @@ class avltree:
             root.right=self.rotater(root.right)
             return self.rotatel(root)
         return root
+    def delete(self,val,node):
+        if node is None:
+            return node
+        elif val<node.val:
+            node.left=self.delete(val,node.left)
+        elif val>node.val:
+            node.right=self.delete(val,node.right)
+        else:
+            if node.left is None:
+                temp=node.right
+                node=None
+                return temp
+            elif node.right is None:
+                temp=node.left
+                node=None
+                return temp
+            temp=self.minmumvalueNode(node.right)
+            node.val=temp.val
+            node.right=self.delete(temp.val,node.right)
+            balance=self.balance(node)
+            if balance>1 and self.balance(node.left)>=0:
+                return self.rotater(node)
+            if balance<-1 and self.balance(node.right)<=0:
+                return self.rotatel(node)
+            if balance>1 and self.balance(node.left)<0:
+                node.left=self.rotatel(node.left)
+                return self.rotater(node)
+            if balance<-1 and self.balance(node.right)<0:
+                node.right=self.rotater(node.right)
+                return self.rotatel(node)
+        return node
     def preorder(self,root):
         if root is None:
             return
@@ -69,4 +100,7 @@ Root=tree.insert(40,Root)
 Root=tree.insert(50,Root)
 Root=tree.insert(25,Root)
 print("preorderd value is: ")
+tree.preorder(Root)
+tree.delete(20,Root)
+print()
 tree.preorder(Root)
